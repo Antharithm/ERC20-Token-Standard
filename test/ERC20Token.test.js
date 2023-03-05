@@ -20,13 +20,24 @@ describe("ERC20Token contract", function() {
   });
 
   describe("Deployment", function () {
+
     it("Should set the right owner", async function () {
       expect(await erc20Token.owner()).to.equal(owner.address);
     });
 
-    it("Should assign the total supply of tokens to the owner", async function () {
+    it("Should assign the total supply of tokens to the owner at deployment", async function () {
       const ownerBalance = await erc20Token.balanceOf(owner.address);
       expect(await erc20Token.totalSupply()).to.equal(ownerBalance);
+    });
+
+    it("Should set the max capped supply during deployment", async function () {
+      const cap = await erc20Token.cap();
+      expect(Number(hre.ethers.utils.formatEther(cap))).to.equal(tokenCap);
+    });
+
+    it("Should set the blockReward during deployment", async function () {
+      const blockReward = await erc20Token.blockReward();
+      expect(Number(hre.ethers.utils.formatEther(blockReward))).to.equal(tokenBlockReward);
     });
   });
 });
