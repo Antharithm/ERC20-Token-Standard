@@ -22,7 +22,7 @@ contract ERC20Token is ERC20Capped, ERC20Burnable {
     }
 
     function _mint(address account, uint256 amount) internal virtual override(ERC20Capped, ERC20) {
-        require(ERC20.totalSupply() + amount <= cap(), "ERC20Capped: cap exceeded");
+        require(ERC20.totalSupply() + amount <= cap(), "ERC20Capped: token cap exceeded");
         super._mint(account, amount);
     }
 
